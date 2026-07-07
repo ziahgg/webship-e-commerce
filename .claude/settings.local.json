@@ -4,7 +4,20 @@
       "mcp__visualize__read_me",
       "mcp__visualize__show_widget",
       "Bash(npm --version)",
-      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --no-git)"
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --no-git)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(nc -zv ep-nameless-waterfall-aoocy84d.c-2.ap-southeast-1.aws.neon.tech 5432)",
+      "Bash(node -e ' *)",
+      "Bash(PGPASSWORD=\"npg_dnUkKyl6Tbh0\" psql \"postgresql://neondb_owner@ep-nameless-waterfall-aoocy84d.ap-southeast-1.aws.neon.tech/neondb?sslmode=require\" -c \"SELECT version\\(\\);\")",
+      "Bash(npx prisma *)",
+      "Bash(timeout 30 npx next dev --port 3001)",
+      "Bash(npx next *)",
+      "Bash(find /var/folders -name \"*.png\" -o -name \"*.jpg\" -o -name \"*.webp\" -o -name \"*.svg\" 2>/dev/null | grep -i \"upload\\\\|tmp\\\\|temp\\\\|claude\" | head -20 && find /tmp -type f \\\\\\( -name \"*.png\" -o -name \"*.jpg\" -o -name \"*.webp\" \\\\\\) 2>/dev/null | head -10 && ls ~/Downloads/*.png ~/Downloads/*.jpg ~/Downloads/*.webp 2>/dev/null | tail -10)",
+      "Bash(cp \"/Users/kenojia/Downloads/logo.png\" /Users/kenojia/Downloads/project/website-ecommerce/public/logo.png && echo \"copied\")",
+      "Bash(python3 -c ' *)",
+      "Bash(identify \"/Users/kenojia/Downloads/logo.png\")",
+      "Bash(unzip -o \"/Users/kenojia/Downloads/image.zip\" \"image/*.png\" -d /tmp/hero-images/)"
     ]
   }
 }

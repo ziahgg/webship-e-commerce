@@ -25,8 +25,12 @@ export function ImageUpload({ images, onChange }: ImageUploadProps) {
         form.append('file', file)
         const res = await fetch('/api/admin/upload', { method: 'POST', body: form })
         if (!res.ok) {
-          const data = await res.json()
-          throw new Error(data.error ?? 'Upload failed')
+          let message = 'Upload failed'
+          try {
+            const data = await res.json()
+            message = data.error ?? message
+          } catch { /* non-JSON error body */ }
+          throw new Error(message)
         }
         const data = await res.json()
         uploaded.push(data.url as string)

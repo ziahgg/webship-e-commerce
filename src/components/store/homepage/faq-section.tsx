@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Minus } from 'lucide-react'
+import Link from 'next/link'
 
 const faqs = [
   {
@@ -30,61 +30,115 @@ export function FaqSection() {
   const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <section style={{ padding: '80px 0' }}>
-      <div style={{ maxWidth: 760, margin: '0 auto', padding: '0 24px' }}>
+    <section style={{ padding: '80px 0', backgroundColor: 'var(--g-cream)' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
+        <div className="faq-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1.1fr',
+          gap: 64,
+          alignItems: 'start',
+        }}>
 
-        <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <div style={{
-            display: 'inline-block',
-            padding: '5px 16px', borderRadius: 99,
-            border: '1px solid var(--g-red)',
-            fontSize: 11, fontWeight: 600, letterSpacing: '0.1em',
-            textTransform: 'uppercase', color: 'var(--g-red)',
-            marginBottom: 12,
-          }}>
-            FAQ
+          {/* ── Left: heading + CTA ── */}
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', gap: 48 }}>
+            <div>
+              <div style={{
+                display: 'inline-block',
+                padding: '5px 16px', borderRadius: 99,
+                border: '1px solid var(--g-red)',
+                fontSize: 11, fontWeight: 600, letterSpacing: '0.1em',
+                textTransform: 'uppercase', color: 'var(--g-red)',
+                marginBottom: 24,
+              }}>
+                FAQ
+              </div>
+              <h2 style={{
+                fontSize: 'clamp(48px, 6vw, 80px)',
+                fontWeight: 700, lineHeight: 1.0,
+                letterSpacing: '-0.035em',
+                color: 'var(--g-ink)', margin: 0,
+              }}>
+                Frequently<br />asked<br />questions.
+              </h2>
+            </div>
+
+            {/* CTA bar */}
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 16,
+              backgroundColor: 'var(--g-cream-alt)',
+              border: '1px solid var(--g-cream-border)',
+              borderRadius: 100,
+              padding: '12px 12px 12px 24px',
+            }}>
+              <p style={{ fontSize: 14, color: 'var(--g-ink-soft)', margin: 0, lineHeight: 1.4 }}>
+                Have a question? Let&apos;s discuss it now!
+              </p>
+              <Link href="/faq" style={{
+                flexShrink: 0,
+                display: 'inline-flex', alignItems: 'center',
+                padding: '10px 20px', borderRadius: 100,
+                backgroundColor: 'var(--g-ink)', color: '#fff',
+                fontSize: 13, fontWeight: 500, textDecoration: 'none',
+                whiteSpace: 'nowrap',
+              }}>
+                Browse FAQ
+              </Link>
+            </div>
           </div>
-          <h2 style={{ fontSize: 36, fontWeight: 700, color: 'var(--g-ink)', margin: 0 }}>
-            Common questions
-          </h2>
-        </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 0, borderTop: '1px solid var(--g-cream-border)' }}>
-          {faqs.map((faq, i) => (
-            <div key={i} style={{ borderBottom: '1px solid var(--g-cream-border)' }}>
-              <button
-                onClick={() => setOpen(open === i ? null : i)}
+          {/* ── Right: dark accordion ── */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {faqs.map((faq, i) => (
+              <div
+                key={i}
                 style={{
-                  width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '20px 0',
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  textAlign: 'left',
+                  backgroundColor: 'var(--g-ink)',
+                  borderRadius: 16,
+                  overflow: 'hidden',
+                  transition: 'background-color 0.15s',
                 }}
               >
-                <span style={{ fontSize: 16, fontWeight: 500, color: 'var(--g-ink)', paddingRight: 16 }}>
-                  {faq.q}
-                </span>
-                <span style={{
-                  flexShrink: 0, width: 28, height: 28, borderRadius: 28,
-                  border: '1.5px solid var(--g-cream-border)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: open === i ? 'var(--g-red)' : 'var(--g-ink-soft)',
-                  borderColor: open === i ? 'var(--g-red)' : 'var(--g-cream-border)',
-                  transition: 'color 0.15s, border-color 0.15s',
-                }}>
-                  {open === i ? <Minus size={14} /> : <Plus size={14} />}
-                </span>
-              </button>
-              {open === i && (
-                <p style={{
-                  margin: 0, paddingBottom: 20,
-                  fontSize: 15, lineHeight: 1.7, color: 'var(--g-ink-soft)',
-                }}>
-                  {faq.a}
-                </p>
-              )}
-            </div>
-          ))}
+                <button
+                  onClick={() => setOpen(open === i ? null : i)}
+                  style={{
+                    width: '100%',
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    padding: '20px 24px',
+                    background: 'none', border: 'none', cursor: 'pointer',
+                    textAlign: 'left', gap: 16,
+                  }}
+                >
+                  <span style={{ fontSize: 15, fontWeight: 500, color: '#fff', lineHeight: 1.4 }}>
+                    {faq.q}
+                  </span>
+                  <span style={{
+                    flexShrink: 0,
+                    width: 28, height: 28,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    color: open === i ? 'var(--g-red)' : 'rgba(255,255,255,0.5)',
+                    fontSize: 22, lineHeight: 1, fontWeight: 300,
+                    transition: 'color 0.15s, transform 0.25s',
+                    transform: open === i ? 'rotate(45deg)' : 'rotate(0deg)',
+                  }}>
+                    +
+                  </span>
+                </button>
+                {open === i && (
+                  <p style={{
+                    margin: 0,
+                    padding: '0 24px 20px',
+                    fontSize: 14, lineHeight: 1.75,
+                    color: 'rgba(255,255,255,0.55)',
+                  }}>
+                    {faq.a}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

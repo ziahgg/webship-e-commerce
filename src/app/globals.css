@@ -190,6 +190,14 @@
   }
 }
 
+/* ─── FAQ Grid mobile override ───────────────────────────────── */
+@media (max-width: 767px) {
+  .faq-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
 /* ─── Bento Grid mobile override ─────────────────────────────── */
 @media (max-width: 767px) {
   .bento-grid {

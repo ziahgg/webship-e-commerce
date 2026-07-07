@@ -19,7 +19,7 @@ const productSchema = z.object({
   price: z.number().positive(),
   comparePrice: z.number().positive().nullable().optional(),
   categoryId: z.string().min(1),
-  images: z.array(z.string().url()).min(1),
+  images: z.array(z.string().min(1)).min(1),
   featured: z.boolean().default(false),
   active: z.boolean().default(true),
   variants: z.array(variantSchema).default([]),

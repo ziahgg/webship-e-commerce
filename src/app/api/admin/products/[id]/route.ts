@@ -3,7 +3,8 @@ import { auth } from '@/lib/auth'
 import { db } from '@/lib/db'
 import { z } from 'zod'
 import { adminApiRateLimit } from '@/lib/rate-limit'
-import { deleteImage, extractPublicId } from '@/lib/cloudinary'
+import { unlink } from 'fs/promises'
+import path from 'path'
 
 const variantSchema = z.object({
   id: z.string().optional(),
@@ -19,7 +20,7 @@ const updateSchema = z.object({
   price: z.number().positive(),
   comparePrice: z.number().positive().nullable().optional(),
   categoryId: z.string().min(1),
-  images: z.array(z.string().url()).min(1),
+  images: z.array(z.string().min(1)).min(1),
   featured: z.boolean(),
   active: z.boolean(),
   variants: z.array(variantSchema).default([]),
@@ -91,11 +92,11 @@ export async function DELETE(_req: NextRequest, { params }: { params: Promise<{ 
   const product = await db.product.findUnique({ where: { id }, select: { images: true } })
   if (!product) return NextResponse.json({ error: 'Not found' }, { status: 404 })
 
-  // Delete images from Cloudinary (best-effort, don't fail if it errors)
+  // Delete local uploaded images (best-effort)
   await Promise.allSettled(
     product.images
-      .filter(url => url.includes('cloudinary.com'))
-      .map(url => deleteImage(extractPublicId(url)))
+      .filter(url => url.startsWith('/uploads/'))
+      .map(url => unlink(path.join(process.cwd(), 'public', url)))
   )
 
   await db.product.delete({ where: { id } })

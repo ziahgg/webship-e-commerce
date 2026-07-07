@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
-import { uploadImage } from '@/lib/cloudinary'
 import { adminApiRateLimit } from '@/lib/rate-limit'
+import { writeFile, mkdir } from 'fs/promises'
+import path from 'path'
+import { randomUUID } from 'crypto'
 
-const MAX_SIZE = 5 * 1024 * 1024 // 5 MB
+const MAX_SIZE = 5 * 1024 * 1024
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+const TYPE_TO_EXT: Record<string, string> = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+}
 
 export async function POST(req: NextRequest) {
   const limited = await adminApiRateLimit(req)
@@ -25,7 +33,16 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'File too large. Maximum 5 MB.' }, { status: 400 })
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer())
-  const url = await uploadImage(buffer)
-  return NextResponse.json({ url })
+  try {
+    const ext = TYPE_TO_EXT[file.type]
+    const filename = `${randomUUID()}.${ext}`
+    const uploadDir = path.join(process.cwd(), 'public', 'uploads')
+    await mkdir(uploadDir, { recursive: true })
+    const buffer = Buffer.from(await file.arrayBuffer())
+    await writeFile(path.join(uploadDir, filename), buffer)
+    return NextResponse.json({ url: `/uploads/${filename}` })
+  } catch (err) {
+    console.error('[upload] File write error:', err)
+    return NextResponse.json({ error: 'Upload failed. Please try again.' }, { status: 500 })
+  }
 }

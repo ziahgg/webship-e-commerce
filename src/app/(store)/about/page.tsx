@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Truck, ShieldCheck, Heart, Headphones } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -99,17 +100,15 @@ export default function AboutPage() {
           {/* Visual */}
           <div style={{
             height: 380, borderRadius: 24,
-            backgroundColor: 'var(--g-ink)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
             overflow: 'hidden', position: 'relative',
           }}>
-            <div style={{ textAlign: 'center', padding: 32 }}>
-              <p style={{ fontSize: 'clamp(48px, 8vw, 96px)', fontWeight: 700, color: 'var(--g-white)', lineHeight: 1, margin: '0 0 12px', letterSpacing: '-0.04em' }}>
-                2021
-              </p>
-              <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.5)', margin: 0 }}>Founded with a mission</p>
-              <div style={{ width: 40, height: 2, backgroundColor: 'var(--g-red)', margin: '20px auto 0', borderRadius: 2 }} />
-            </div>
+            <Image
+              src="/about-box.png"
+              alt="Webship branded delivery box"
+              fill
+              style={{ objectFit: 'cover', objectPosition: 'center' }}
+              sizes="(max-width: 767px) 100vw, 50vw"
+            />
           </div>
         </div>
       </section>
@@ -164,33 +163,23 @@ export default function AboutPage() {
       </section>
 
       {/* ── 5. CTA ── */}
-      <section style={{ padding: '80px 24px', backgroundColor: 'var(--g-ink)', textAlign: 'center' }}>
+      <section style={{ padding: '80px 24px', backgroundColor: 'var(--g-red)', textAlign: 'center' }}>
         <div style={{ maxWidth: 600, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <h2 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 700, color: 'var(--g-white)', margin: 0, lineHeight: 1.15, letterSpacing: '-0.02em' }}>
             Ready to experience{' '}
-            <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--g-red)', fontFamily: 'var(--font-display)' }}>Webship?</em>
+            <em style={{ fontStyle: 'italic', fontWeight: 400, color: 'var(--g-white)', fontFamily: 'var(--font-display)' }}>Webship?</em>
           </h2>
-          <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.55)', margin: 0, lineHeight: 1.65 }}>
+          <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.75)', margin: 0, lineHeight: 1.65 }}>
             Join thousands of happy customers who trust us for quality products, fast delivery, and honest service.
           </p>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link href="/products" style={{
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              padding: '13px 28px', borderRadius: 100,
-              backgroundColor: 'var(--g-red)', color: '#fff',
-              fontSize: 15, fontWeight: 500, textDecoration: 'none',
-            }}>
-              Shop Now
-            </Link>
-            <Link href="/contact" style={{
-              display: 'inline-flex', alignItems: 'center',
-              padding: '13px 28px', borderRadius: 100,
-              border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.8)',
-              fontSize: 15, textDecoration: 'none',
-            }}>
-              Contact Us
-            </Link>
-          </div>
+          <Link href="/products" style={{
+            display: 'inline-flex', alignItems: 'center', gap: 8,
+            padding: '13px 32px', borderRadius: 100,
+            backgroundColor: 'var(--g-white)', color: 'var(--g-red)',
+            fontSize: 15, fontWeight: 600, textDecoration: 'none',
+          }}>
+            Shop Now
+          </Link>
         </div>
       </section>
     </>
